@@ -6,6 +6,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const { default: helmet } = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+var cors = require("cors");
 
 const requestRouter = require("./routes/requestRoutes");
 const userRouter = require("./routes/userRoute");
@@ -24,12 +25,8 @@ const limiter = rateLimit({
   message: "Too many request from this IP please try again after 1 hour",
 });
 
-// cors block enable
-app.all("/*", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+// cors block disabled
+app.use(cors());
 // security http
 app.use(helmet());
 // limit controller
