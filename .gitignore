@@ -1,0 +1,26 @@
+# Dependency directories
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+# .env
+
+# Generated files or directories
+dist/
+coverage/
+
+# OS generated files
+.DS_Store
+
+# IDE or editor specific files
+.vscode/
+.idea/
+
+# OS generated files
+Thumbs.db
+
+# For yarn users
+yarn-error.log
