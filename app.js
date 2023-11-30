@@ -23,6 +23,13 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: "Too many request from this IP please try again after 1 hour",
 });
+
+// cors block enable
+app.all("/*", function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 // security http
 app.use(helmet());
 // limit controller
@@ -47,6 +54,12 @@ app.use("/users", userRouter);
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
+});
+app.all("*", (req, res, next) => {
+  return res.status(404).json({
+    status: "fail",
+    error: "Page not found",
+  });
 });
 
 // 3) ROUTES
