@@ -2,6 +2,7 @@ const express = require("express");
 const auth = require("../routes/authRoute");
 const User = require("../Modal/userModal");
 const jwt = require("jsonwebtoken");
+const catchAsync = require("../utils/catchAsync");
 const router = express.Router();
 // auth.protect,
 router.route("/").post(auth.protect, async (req, res, next) => {
@@ -63,5 +64,22 @@ router.route("/login").post(async (req, res, next) => {
     });
   }
 });
+
+router.route("/me").get(
+  auth.protect,
+  catchAsync(async (req, res, next) => {
+    const { user } = req;
+    const { _id, userType, name, username } = user;
+    return res.status(200).json({
+      success: true,
+      data: {
+        _id,
+        userType,
+        name,
+        username,
+      },
+    });
+  })
+);
 
 module.exports = router;

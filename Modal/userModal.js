@@ -10,6 +10,14 @@ const userSchema = mongoose.Schema({
     required: [true, "User must have a user name"],
     unique: [true, "User name already exist"],
   },
+  userType: {
+    type: String,
+    default: "admin",
+    enum: {
+      values: ["admin", "viewer"],
+      message: "Difficulty should be either easy medium or deifficult",
+    },
+  },
   password: {
     type: String,
     required: [true, "Password is required"],

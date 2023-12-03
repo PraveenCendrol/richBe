@@ -7,9 +7,10 @@ const { default: helmet } = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 var cors = require("cors");
-
+const errorController = require("./controller/errorController");
 const requestRouter = require("./routes/requestRoutes");
 const userRouter = require("./routes/userRoute");
+const AppError = require("./utils/appError");
 
 const app = express();
 
@@ -53,14 +54,11 @@ app.use((req, res, next) => {
   next();
 });
 app.all("*", (req, res, next) => {
-  return res.status(404).json({
-    status: "fail",
-    error: "Page not found",
-  });
+  next(new AppError("API not found", 404));
 });
 
 // 3) ROUTES
 
-// app.use(errorController);
+app.use(errorController);
 
 module.exports = app;
